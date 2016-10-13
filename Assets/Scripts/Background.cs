@@ -14,6 +14,6 @@ public class Background : MonoBehaviour
 		Vector2 offset = new Vector2 (0, y);
 		
 		// マテリアルにオフセットを設定する
-		renderer.sharedMaterial.SetTextureOffset ("_MainTex", offset);
+		GetComponent<Renderer>().sharedMaterial.SetTextureOffset ("_MainTex", offset);
 	}
 }
