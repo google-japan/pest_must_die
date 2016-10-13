@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 			spaceship.Shot (transform);
 			
 			// ショット音を鳴らす
-			audio.Play();
+			GetComponent<AudioSource>().Play();
 			
 			// shotDelay秒待つ
 			yield return new WaitForSeconds (spaceship.shotDelay);
