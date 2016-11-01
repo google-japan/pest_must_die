@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 	{
 		// Spaceshipコンポーネントを取得
 		spaceship = GetComponent<Spaceship> ();
+<<<<<<< HEAD
+
+=======
         kinchoru = GetComponent<KinchoruManager> ();
         kinchoru.setSpaceShip(spaceship);
         kinchoru.SetDefaultPower();// パワーをデフォルト値に戻す
@@ -23,9 +26,10 @@ public class Player : MonoBehaviour
 			// ショット音を鳴らす
 			GetComponent<AudioSource>().Play();
 			
+>>>>>>> origin/develop
 			// shotDelay秒待つ
 			yield return new WaitForSeconds (spaceship.shotDelay);
-		}
+
 	}
 	
 	void Update ()
@@ -41,7 +45,13 @@ public class Player : MonoBehaviour
 		
 		// 移動の制限
 		Move (direction);
-		
+
+		if (Input.GetKeyDown (KeyCode.X)) {
+			// 弾をプレイヤーと同じ位置/角度で作成
+			spaceship.Shot (transform);
+			// ショット音を鳴らす
+			GetComponent<AudioSource>().Play();
+		}
 	}
 
 	// 機体の移動
