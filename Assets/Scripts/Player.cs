@@ -80,7 +80,9 @@ public class Player : MonoBehaviour
 			Destroy(c.gameObject);
 		}
 
+        if( layerName.Contains("kinchoru"))
         {
+            kinchoru.powerUp(layerName); /* 攻撃力を上げる */
             Destroy(c.gameObject);
         }
 
@@ -92,7 +94,7 @@ public class Player : MonoBehaviour
 
 			// 爆発する
 			spaceship.Explosion();
-		
+
 			// プレイヤーを削除
 			Destroy (gameObject);
 		}
