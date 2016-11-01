@@ -229,8 +229,6 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-<<<<<<< HEAD
-=======
 --- !u!114 &114000010390106670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,4 +240,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79a6b8c5bf03ca428623dd38902e3c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
->>>>>>> origin/develop
