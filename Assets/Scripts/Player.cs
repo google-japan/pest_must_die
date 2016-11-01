@@ -15,18 +15,9 @@ public class Player : MonoBehaviour
         kinchoru.setSpaceShip(spaceship);
         kinchoru.SetDefaultPower();// パワーをデフォルト値に戻す
 
-        while (true)
-        {
-
-            // 弾をプレイヤーと同じ位置/角度で作成
-            spaceship.Shot(transform);
-
-            // ショット音を鳴らす
-            GetComponent<AudioSource>().Play();
-
-            // shotDelay秒待つ
-            yield return new WaitForSeconds(spaceship.shotDelay);
-        }
+        // shotDelay秒待つ
+        yield return new WaitForSeconds(spaceship.shotDelay);
+        
 	}
 	
 	void Update ()
