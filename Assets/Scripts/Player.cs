@@ -5,13 +5,17 @@ public class Player : MonoBehaviour
 {
 	// Spaceshipコンポーネント
 	Spaceship spaceship;
+    KinchoruManager kinchoru;
 	
 	IEnumerator Start ()
 	{
 		// Spaceshipコンポーネントを取得
 		spaceship = GetComponent<Spaceship> ();
-		
-		while (true) {
+        kinchoru = GetComponent<KinchoruManager> ();
+        kinchoru.setSpaceShip(spaceship);
+        kinchoru.SetDefaultPower();// パワーをデフォルト値に戻す
+
+        while (true) {
 			
 			// 弾をプレイヤーと同じ位置/角度で作成
 			spaceship.Shot (transform);
@@ -76,15 +80,21 @@ public class Player : MonoBehaviour
 			Destroy(c.gameObject);
 		}
 
-		// レイヤー名がBullet (Enemy)またはEnemyの場合は爆発
-		if( layerName == "Bullet (Enemy)" || layerName == "Enemy")
+        if( layerName.Contains("kinchoru"))
+        {
+            kinchoru.powerUp(layerName); /* 攻撃力を上げる */
+            Destroy(c.gameObject);
+        }
+
+        // レイヤー名がBullet (Enemy)またはEnemyの場合は爆発
+        if ( layerName == "Bullet (Enemy)" || layerName == "Enemy")
 		{
 			// Managerコンポーネントをシーン内から探して取得し、GameOverメソッドを呼び出す
 			FindObjectOfType<Manager>().GameOver();
 
 			// 爆発する
 			spaceship.Explosion();
-		
+
 			// プレイヤーを削除
 			Destroy (gameObject);
 		}
