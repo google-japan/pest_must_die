@@ -5,13 +5,20 @@ public class Player : MonoBehaviour
 {
 	// Spaceshipコンポーネント
 	Spaceship spaceship;
+    KinchoruManager kinchoru;
 	
 	IEnumerator Start ()
 	{
 		// Spaceshipコンポーネントを取得
 		spaceship = GetComponent<Spaceship> ();
-		
-		while (true) {
+<<<<<<< HEAD
+
+=======
+        kinchoru = GetComponent<KinchoruManager> ();
+        kinchoru.setSpaceShip(spaceship);
+        kinchoru.SetDefaultPower();// パワーをデフォルト値に戻す
+
+        while (true) {
 			
 			// 弾をプレイヤーと同じ位置/角度で作成
 			spaceship.Shot (transform);
@@ -19,9 +26,10 @@ public class Player : MonoBehaviour
 			// ショット音を鳴らす
 			GetComponent<AudioSource>().Play();
 			
+>>>>>>> origin/develop
 			// shotDelay秒待つ
 			yield return new WaitForSeconds (spaceship.shotDelay);
-		}
+
 	}
 	
 	void Update ()
@@ -37,7 +45,13 @@ public class Player : MonoBehaviour
 		
 		// 移動の制限
 		Move (direction);
-		
+
+		if (Input.GetKeyDown (KeyCode.X)) {
+			// 弾をプレイヤーと同じ位置/角度で作成
+			spaceship.Shot (transform);
+			// ショット音を鳴らす
+			GetComponent<AudioSource>().Play();
+		}
 	}
 
 	// 機体の移動
@@ -76,15 +90,21 @@ public class Player : MonoBehaviour
 			Destroy(c.gameObject);
 		}
 
-		// レイヤー名がBullet (Enemy)またはEnemyの場合は爆発
-		if( layerName == "Bullet (Enemy)" || layerName == "Enemy")
+        if( layerName.Contains("kinchoru"))
+        {
+            kinchoru.powerUp(layerName); /* 攻撃力を上げる */
+            Destroy(c.gameObject);
+        }
+
+        // レイヤー名がBullet (Enemy)またはEnemyの場合は爆発
+        if ( layerName == "Bullet (Enemy)" || layerName == "Enemy")
 		{
 			// Managerコンポーネントをシーン内から探して取得し、GameOverメソッドを呼び出す
 			FindObjectOfType<Manager>().GameOver();
 
 			// 爆発する
 			spaceship.Explosion();
-		
+
 			// プレイヤーを削除
 			Destroy (gameObject);
 		}
