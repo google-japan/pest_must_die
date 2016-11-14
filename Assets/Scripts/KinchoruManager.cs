@@ -17,6 +17,8 @@ public class KinchoruManager : MonoBehaviour {
         GameObject g = spaceship.bullet; // ゲームオブジェクトを取得
         Bullet b = g.GetComponent<Bullet>(); // コンポーネントを取得（これでスクリプトが取得出来るっぽい）
         b.power = DefaultPower;
+        b.powerchou = DefaultPower;
+        b.powerhachi = DefaultPower;
     }
 
     public void powerUp(string layerName)
@@ -31,9 +33,16 @@ public class KinchoruManager : MonoBehaviour {
                 b.power += PowerUpPoint;
             } 
         }else if(layerName.Contains("Hachi")){
-
-        }else{
-
+            if (b.powerhachi < MaxPower)
+            {
+                b.powerhachi += PowerUpPoint;
+            }
+        }
+        else{
+            if (b.powerchou < MaxPower)
+            {
+                b.powerchou += PowerUpPoint;
+            }
         }
     }
     
