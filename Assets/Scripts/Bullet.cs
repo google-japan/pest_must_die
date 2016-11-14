@@ -10,8 +10,10 @@ public class Bullet : MonoBehaviour
 
 	// 攻撃力
 	public int power = 1;
+    public int powerhachi = 1;
+    public int powerchou = 1;
 
-	void Start ()
+    void Start ()
 	{
 		// ローカル座標のY軸方向に移動する
 		GetComponent<Rigidbody2D>().velocity = transform.up.normalized * speed;
