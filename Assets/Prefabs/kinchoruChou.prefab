@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010864874574}
   - 212: {fileID: 212000010324676688}
+  - 61: {fileID: 61000010981563070}
   m_Layer: 15
   m_Name: kinchoruChou
   m_TagString: Untagged
@@ -40,6 +41,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!61 &61000010981563070
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011307153180}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.38, y: 0.37}
 --- !u!212 &212000010324676688
 SpriteRenderer:
   m_ObjectHideFlags: 1
