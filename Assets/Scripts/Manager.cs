@@ -7,38 +7,71 @@ public class Manager : MonoBehaviour
 	
 	// タイトル
 	private GameObject title;
-	
-	void Start ()
+
+    // ランキング
+    public GameObject ranking;
+
+    void Start ()
 	{
 		// Titleゲームオブジェクトを検索し取得する
 		title = GameObject.Find ("Title");
-	}
+        // ランキングを取得し非表示とする
+        ranking = GameObject.Find("Ranking");
+        ranking.SetActive(false);
+    }
 	
 	void Update ()
 	{
-		// ゲーム中ではなく、Xキーが押されたらtrueを返す。
-		if (IsPlaying () == false && Input.GetKeyDown (KeyCode.X)) {
-			GameStart ();
-		}
-	}
-	
-	void GameStart ()
+        // タイトル画面で、Xキーが押されたらゲームスタート。
+        if (IsTitle() == true && Input.GetKeyDown(KeyCode.X))
+        {
+            GameStart();
+        }
+
+        // ランキング画面で、Tキーが押されたらタイトルへ
+        if (IsRanking() == true && Input.GetKeyDown(KeyCode.T))
+        {
+            GameTitle();
+        }
+    }
+
+    void GameTitle()
+    {
+        title.SetActive(true);
+        ranking.SetActive(false);
+    }
+
+    void GameStart ()
 	{
-		// ゲームスタート時に、タイトルを非表示にしてプレイヤーを作成する
-		title.SetActive (false);
-		Instantiate (player, player.transform.position, player.transform.rotation);
+        // ゲームスタート時に、タイトル・ランキングを非表示にしてプレイヤーを作成する
+        title.SetActive(false);
+        ranking.SetActive(false);
+        Instantiate (player, player.transform.position, player.transform.rotation);
 	}
 	
 	public void GameOver ()
 	{
-		FindObjectOfType<Score>().Save();
-		// ゲームオーバー時に、タイトルを表示する
-		title.SetActive (true);
-	}
-	
-	public bool IsPlaying ()
-	{
-		// ゲーム中かどうかはタイトルの表示/非表示で判断する
-		return title.activeSelf == false;
-	}
+        // ゲームオーバー時に、ランキングを表示する
+        ranking.SetActive (true);
+        // スコア登録
+        FindObjectOfType<Score>().Save();
+    }
+
+    public bool IsPlaying()
+    {
+        // ゲーム中かどうかはタイトル/ランキングの表示/非表示で判断する
+        return (title.activeSelf == false && ranking.activeSelf == false);
+    }
+
+    public bool IsRanking()
+    {
+        // ランキング画面かどうか判定
+        return ranking.activeSelf == true;
+    }
+
+    public bool IsTitle()
+    {
+        // タイトル画面かどうか判定
+        return title.activeSelf == true;
+    }
 }
