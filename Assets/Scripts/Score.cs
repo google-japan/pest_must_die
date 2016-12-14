@@ -9,15 +9,15 @@ public class Score : MonoBehaviour
 	public GUIText highScoreGUIText;
 	
 	// スコア
-	private int score;
+	public int score;
 	
 	// ハイスコア
 	private int highScore;
 	
 	// PlayerPrefsで保存するためのキー
 	private string highScoreKey = "highScore";
-	
-	void Start ()
+
+    void Start ()
 	{
 		Initialize ();
 	}
@@ -55,9 +55,11 @@ public class Score : MonoBehaviour
 	{
 		// ハイスコアを保存する
 		PlayerPrefs.SetInt (highScoreKey, highScore);
-		PlayerPrefs.Save ();
-		
-		// ゲーム開始前の状態に戻す
-		Initialize ();
+        PlayerPrefs.Save();
+        // ランキング更新
+        FindObjectOfType<Ranking>().UpdateRanking(score);
+
+        // ゲーム開始前の状態に戻す
+        Initialize ();
 	}
 }
