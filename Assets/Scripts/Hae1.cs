@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hae : MonoBehaviour {
+public class Hae1 : MonoBehaviour
+{
     // ヒットポイント
     public int hp = 1;
 
@@ -31,24 +32,29 @@ public class Hae : MonoBehaviour {
         }
     }
 
-    public float a = 0.0f;
-    public float b = 0.0f;
+    public float xKakudo = 100.0f;
+    public float yKakudo = 30.0f;
     // 機体の移動
     public void Move(Vector2 d)
     {
-        a = a + 60.0f;
-        b = b + 60.0f;
 
-        float xKakudo = a;
-        float yKakudo = b;
-        float speed = spaceship.speed * 3;
-        float x = Mathf.Cos(Mathf.Deg2Rad * xKakudo) * speed;
-        float y = Mathf.Sin(Mathf.Deg2Rad * yKakudo) * speed;
-        if(x < 0)
+        if (transform.position.y > -1 && transform.position.y < 1)
         {
-            x = Mathf.Cos(Mathf.Deg2Rad * xKakudo) * spaceship.speed * 5;
         }
-        
+        else if (transform.position.y >= 1)
+        {
+            xKakudo = -100.0f;
+            yKakudo = -30.0f;
+        }else if (transform.position.y <= -1)
+        {
+            xKakudo = 100.0f;
+            yKakudo = 30.0f;
+        }
+
+        float speed = spaceship.speed;
+        float x = Mathf.Cos(Mathf.Deg2Rad * xKakudo) * speed*12;
+        float y = Mathf.Sin(Mathf.Deg2Rad * yKakudo) * speed*4;
+
         GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
     }
 
