@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hachi : MonoBehaviour {
-
+public class Hachi2 : MonoBehaviour {
     // ヒットポイント
     public int hp = 1;
 
@@ -13,13 +12,17 @@ public class Hachi : MonoBehaviour {
     // Spaceshipコンポーネント
     Spaceship spaceship;
 
-    public GameObject targetObject = null;
+    // 増殖済み
+    static bool zoushokuZumi = false;
 
     IEnumerator Start()
     {
-        targetObject = GameObject.Find("Player");
+
         // Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+
+        // ローカル座標のY軸のマイナス方向に移動する
+        Move(transform.up * -1);
 
         // canShotがfalseの場合、ここでコルーチンを終了させる
         if (spaceship.canShot == false)
@@ -29,22 +32,31 @@ public class Hachi : MonoBehaviour {
 
         while (true)
         {
-            Move(transform.position);
+            if (!zoushokuZumi && spaceship.transform.position.x < 2)
+            {
+                zoushokuZumi = true;
+                cloneHachi(0, 50);
+                cloneHachi(0, -50);
+                cloneHachi(0, 25);
+                cloneHachi(0, -25);
+
+            }
+
             // shotDelay秒待つ
             yield return new WaitForSeconds(spaceship.shotDelay);
         }
     }
 
-    // 機体の移動
-    public void Move(Vector2 d)
+    private void cloneHachi(int x, int y)
     {
-        if (targetObject == null)
-        {
-            return;
-        }
+        GameObject clone = Instantiate(gameObject) as GameObject;
+        clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
+    }
 
-        float speed = spaceship.speed;
-        GetComponent<Rigidbody2D>().velocity = targetObject.transform.position * speed;
+    // 機体の移動
+    public void Move(Vector2 direction)
+    {
+        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed * 4;
     }
 
     void OnTriggerEnter2D(Collider2D c)
@@ -87,4 +99,5 @@ public class Hachi : MonoBehaviour {
 
         }
     }
+
 }
