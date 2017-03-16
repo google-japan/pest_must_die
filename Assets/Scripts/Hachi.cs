@@ -38,6 +38,11 @@ public class Hachi : MonoBehaviour {
     // 機体の移動
     public void Move(Vector2 d)
     {
+        if (targetObject == null)
+        {
+            return;
+        }
+
         float speed = spaceship.speed;
         float kyori = Vector2.Distance(targetObject.transform.position,d);
         /*
