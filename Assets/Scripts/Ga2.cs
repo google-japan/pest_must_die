@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hachi2 : MonoBehaviour {
+public class Ga2 : MonoBehaviour {
+
     // ヒットポイント
     public int hp = 1;
 
@@ -11,9 +12,6 @@ public class Hachi2 : MonoBehaviour {
 
     // Spaceshipコンポーネント
     Spaceship spaceship;
-
-    // 増殖済み
-    public bool zoushokuZumi = false;
 
     IEnumerator Start()
     {
@@ -32,14 +30,15 @@ public class Hachi2 : MonoBehaviour {
 
         while (true)
         {
-            if (!zoushokuZumi && spaceship.transform.position.x < 2)
-            {
-                zoushokuZumi = true;
-                cloneHachi(0, 50);
-                cloneHachi(0, -50);
-                cloneHachi(0, 25);
-                cloneHachi(0, -25);
 
+            // 子要素を全て取得する
+            for (int i = 0; i < transform.childCount; i++)
+            {
+
+                Transform shotPosition = transform.GetChild(i);
+
+                // ShotPositionの位置/角度で弾を撃つ
+                spaceship.Shot(shotPosition);
             }
 
             // shotDelay秒待つ
@@ -47,18 +46,10 @@ public class Hachi2 : MonoBehaviour {
         }
     }
 
-    private void cloneHachi(int x, int y)
-    {
-        GameObject clone = Instantiate(gameObject) as GameObject;
-        Hachi2 h = clone.GetComponent<Hachi2>();
-        h.zoushokuZumi = true;
-        clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
-    }
-
     // 機体の移動
     public void Move(Vector2 direction)
     {
-        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed * 4;
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(-120,90));
     }
 
     void OnTriggerEnter2D(Collider2D c)
@@ -101,5 +92,4 @@ public class Hachi2 : MonoBehaviour {
 
         }
     }
-
 }
