@@ -67,7 +67,7 @@ public class Ga2 : MonoBehaviour {
         Bullet bullet = playerBulletTransform.GetComponent<Bullet>();
 
         // ヒットポイントを減らす
-        hp = hp - bullet.power;
+        hp = hp - bullet.powerchou;
 
         // 弾の削除
         Destroy(c.gameObject);

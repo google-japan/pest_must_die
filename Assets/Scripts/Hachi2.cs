@@ -76,7 +76,7 @@ public class Hachi2 : MonoBehaviour {
         Bullet bullet = playerBulletTransform.GetComponent<Bullet>();
 
         // ヒットポイントを減らす
-        hp = hp - bullet.power;
+        hp = hp - bullet.powerhachi;
 
         // 弾の削除
         Destroy(c.gameObject);
