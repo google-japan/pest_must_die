@@ -13,7 +13,7 @@ public class Hachi2 : MonoBehaviour {
     Spaceship spaceship;
 
     // 増殖済み
-    static bool zoushokuZumi = false;
+    public bool zoushokuZumi = false;
 
     IEnumerator Start()
     {
@@ -50,6 +50,8 @@ public class Hachi2 : MonoBehaviour {
     private void cloneHachi(int x, int y)
     {
         GameObject clone = Instantiate(gameObject) as GameObject;
+        Hachi2 h = clone.GetComponent<Hachi2>();
+        h.zoushokuZumi = true;
         clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
     }
 
