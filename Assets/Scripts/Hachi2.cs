@@ -22,7 +22,7 @@ public class Hachi2 : MonoBehaviour {
         spaceship = GetComponent<Spaceship>();
 
         // ローカル座標のY軸のマイナス方向に移動する
-        Move(transform.up * -1);
+        Move(transform.right * -1);
 
         // canShotがfalseの場合、ここでコルーチンを終了させる
         if (spaceship.canShot == false)

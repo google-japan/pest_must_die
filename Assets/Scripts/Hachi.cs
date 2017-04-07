@@ -17,7 +17,6 @@ public class Hachi : MonoBehaviour {
 
     IEnumerator Start()
     {
-        targetObject = GameObject.Find("Player");
         // Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
 
@@ -29,6 +28,10 @@ public class Hachi : MonoBehaviour {
 
         while (true)
         {
+            if(targetObject == null)
+            {
+                targetObject = GameObject.Find("Player");
+            }
             Move(transform.position);
             // shotDelay秒待つ
             yield return new WaitForSeconds(spaceship.shotDelay);
