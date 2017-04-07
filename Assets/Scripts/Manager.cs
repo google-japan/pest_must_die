@@ -46,7 +46,8 @@ public class Manager : MonoBehaviour
         // ゲームスタート時に、タイトル・ランキングを非表示にしてプレイヤーを作成する
         title.SetActive(false);
         ranking.SetActive(false);
-        Instantiate (player, player.transform.position, player.transform.rotation);
+        GameObject obj = Instantiate (player, player.transform.position, player.transform.rotation);
+        obj.name = player.name;
 	}
 	
 	public void GameOver ()

@@ -88,7 +88,7 @@ public class Ga : MonoBehaviour {
         else
         {
             // Damageトリガーをセット
-            spaceship.GetAnimator().SetTrigger("Damage");
+         //   spaceship.GetAnimator().SetTrigger("Damage");
 
         }
     }

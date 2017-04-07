@@ -23,6 +23,7 @@ public class Spaceship : MonoBehaviour
 
 	void Start ()
 	{
+        speed = speed * 2;
 		// アニメーターコンポーネントを取得
 		animator = GetComponent<Animator> ();
 	}
