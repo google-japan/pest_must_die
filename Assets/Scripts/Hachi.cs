@@ -83,7 +83,7 @@ public class Hachi : MonoBehaviour {
         else
         {
             // Damageトリガーをセット
-            spaceship.GetAnimator().SetTrigger("Damage");
+            // spaceship.GetAnimator().SetTrigger("Damage");
 
         }
     }

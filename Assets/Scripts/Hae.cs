@@ -88,7 +88,7 @@ public class Hae : MonoBehaviour {
         else
         {
             // Damageトリガーをセット
-            spaceship.GetAnimator().SetTrigger("Damage");
+           // spaceship.GetAnimator().SetTrigger("Damage");
 
         }
     }
