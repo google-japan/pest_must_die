@@ -1,20 +1,23 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Hae1 : MonoBehaviour
-{
+public class Hachi : MonoBehaviour {
+
     // ヒットポイント
-    public int hp = 2;
+    public int hp = 1;
 
     // スコアのポイント
-    public int point = 200;
+    public int point = 100;
 
     // Spaceshipコンポーネント
     Spaceship spaceship;
 
+    public GameObject targetObject = null;
+
     IEnumerator Start()
     {
-
+        targetObject = GameObject.Find("Player");
         // Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
 
@@ -26,36 +29,22 @@ public class Hae1 : MonoBehaviour
 
         while (true)
         {
-            Move(transform.up * 1);
+            Move(transform.position);
             // shotDelay秒待つ
             yield return new WaitForSeconds(spaceship.shotDelay);
         }
     }
 
-    public float xKakudo = 100.0f;
-    public float yKakudo = 30.0f;
     // 機体の移動
     public void Move(Vector2 d)
     {
-
-        if (transform.position.y > -1 && transform.position.y < 1)
+        if (targetObject == null)
         {
-        }
-        else if (transform.position.y >= 1)
-        {
-            xKakudo = -100.0f;
-            yKakudo = -30.0f;
-        }else if (transform.position.y <= -1)
-        {
-            xKakudo = 100.0f;
-            yKakudo = 30.0f;
+            return;
         }
 
         float speed = spaceship.speed;
-        float x = Mathf.Cos(Mathf.Deg2Rad * xKakudo) * speed*12;
-        float y = Mathf.Sin(Mathf.Deg2Rad * yKakudo) * speed*4;
-
-        GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
+        GetComponent<Rigidbody2D>().velocity = targetObject.transform.position * speed;
     }
 
     void OnTriggerEnter2D(Collider2D c)
@@ -73,7 +62,7 @@ public class Hae1 : MonoBehaviour
         Bullet bullet = playerBulletTransform.GetComponent<Bullet>();
 
         // ヒットポイントを減らす
-        hp = hp - bullet.power;
+        hp = hp - bullet.powerhachi;
 
         // 弾の削除
         Destroy(c.gameObject);

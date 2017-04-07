@@ -1,22 +1,28 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Hae1 : MonoBehaviour
-{
+public class Hachi2 : MonoBehaviour {
     // ヒットポイント
-    public int hp = 2;
+    public int hp = 3;
 
     // スコアのポイント
-    public int point = 200;
+    public int point = 300;
 
     // Spaceshipコンポーネント
     Spaceship spaceship;
+
+    // 増殖済み
+    public bool zoushokuZumi = false;
 
     IEnumerator Start()
     {
 
         // Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+
+        // ローカル座標のY軸のマイナス方向に移動する
+        Move(transform.up * -1);
 
         // canShotがfalseの場合、ここでコルーチンを終了させる
         if (spaceship.canShot == false)
@@ -26,36 +32,33 @@ public class Hae1 : MonoBehaviour
 
         while (true)
         {
-            Move(transform.up * 1);
+            if (!zoushokuZumi && spaceship.transform.position.x < 2)
+            {
+                zoushokuZumi = true;
+                cloneHachi(0, 50);
+                cloneHachi(0, -50);
+                cloneHachi(0, 25);
+                cloneHachi(0, -25);
+
+            }
+
             // shotDelay秒待つ
             yield return new WaitForSeconds(spaceship.shotDelay);
         }
     }
 
-    public float xKakudo = 100.0f;
-    public float yKakudo = 30.0f;
-    // 機体の移動
-    public void Move(Vector2 d)
+    private void cloneHachi(int x, int y)
     {
+        GameObject clone = Instantiate(gameObject) as GameObject;
+        Hachi2 h = clone.GetComponent<Hachi2>();
+        h.zoushokuZumi = true;
+        clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
+    }
 
-        if (transform.position.y > -1 && transform.position.y < 1)
-        {
-        }
-        else if (transform.position.y >= 1)
-        {
-            xKakudo = -100.0f;
-            yKakudo = -30.0f;
-        }else if (transform.position.y <= -1)
-        {
-            xKakudo = 100.0f;
-            yKakudo = 30.0f;
-        }
-
-        float speed = spaceship.speed;
-        float x = Mathf.Cos(Mathf.Deg2Rad * xKakudo) * speed*12;
-        float y = Mathf.Sin(Mathf.Deg2Rad * yKakudo) * speed*4;
-
-        GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
+    // 機体の移動
+    public void Move(Vector2 direction)
+    {
+        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed * 4;
     }
 
     void OnTriggerEnter2D(Collider2D c)
@@ -73,7 +76,7 @@ public class Hae1 : MonoBehaviour
         Bullet bullet = playerBulletTransform.GetComponent<Bullet>();
 
         // ヒットポイントを減らす
-        hp = hp - bullet.power;
+        hp = hp - bullet.powerhachi;
 
         // 弾の削除
         Destroy(c.gameObject);
@@ -98,4 +101,5 @@ public class Hae1 : MonoBehaviour
 
         }
     }
+
 }

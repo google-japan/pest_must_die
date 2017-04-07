@@ -1,13 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Hae1 : MonoBehaviour
-{
+public class Ga : MonoBehaviour {
+
     // ヒットポイント
-    public int hp = 2;
+    public int hp = 1;
 
     // スコアのポイント
-    public int point = 200;
+    public int point = 100;
 
     // Spaceshipコンポーネント
     Spaceship spaceship;
@@ -18,6 +19,9 @@ public class Hae1 : MonoBehaviour
         // Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
 
+        // ローカル座標のY軸のマイナス方向に移動する
+        Move(transform.up * -1);
+
         // canShotがfalseの場合、ここでコルーチンを終了させる
         if (spaceship.canShot == false)
         {
@@ -26,36 +30,26 @@ public class Hae1 : MonoBehaviour
 
         while (true)
         {
-            Move(transform.up * 1);
+
+            // 子要素を全て取得する
+            for (int i = 0; i < transform.childCount; i++)
+            {
+
+                Transform shotPosition = transform.GetChild(i);
+
+                // ShotPositionの位置/角度で弾を撃つ
+                spaceship.Shot(shotPosition);
+            }
+
             // shotDelay秒待つ
             yield return new WaitForSeconds(spaceship.shotDelay);
         }
     }
 
-    public float xKakudo = 100.0f;
-    public float yKakudo = 30.0f;
     // 機体の移動
-    public void Move(Vector2 d)
+    public void Move(Vector2 direction)
     {
-
-        if (transform.position.y > -1 && transform.position.y < 1)
-        {
-        }
-        else if (transform.position.y >= 1)
-        {
-            xKakudo = -100.0f;
-            yKakudo = -30.0f;
-        }else if (transform.position.y <= -1)
-        {
-            xKakudo = 100.0f;
-            yKakudo = 30.0f;
-        }
-
-        float speed = spaceship.speed;
-        float x = Mathf.Cos(Mathf.Deg2Rad * xKakudo) * speed*12;
-        float y = Mathf.Sin(Mathf.Deg2Rad * yKakudo) * speed*4;
-
-        GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
+        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed;
     }
 
     void OnTriggerEnter2D(Collider2D c)
@@ -73,7 +67,7 @@ public class Hae1 : MonoBehaviour
         Bullet bullet = playerBulletTransform.GetComponent<Bullet>();
 
         // ヒットポイントを減らす
-        hp = hp - bullet.power;
+        hp = hp - bullet.powerchou;
 
         // 弾の削除
         Destroy(c.gameObject);
