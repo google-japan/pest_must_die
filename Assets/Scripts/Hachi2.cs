@@ -58,7 +58,7 @@ public class Hachi2 : MonoBehaviour {
     // 機体の移動
     public void Move(Vector2 direction)
     {
-        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed * 4;
+        GetComponent<Rigidbody2D>().velocity = direction * spaceship.speed;
     }
 
     void OnTriggerEnter2D(Collider2D c)

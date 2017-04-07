@@ -46,7 +46,7 @@ public class Hachi : MonoBehaviour {
             return;
         }
 
-        float speed = spaceship.speed*2;
+        float speed = spaceship.speed;
         GetComponent<Rigidbody2D>().velocity = targetObject.transform.position * speed;
     }
 

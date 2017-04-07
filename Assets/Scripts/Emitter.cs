@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Emitter : MonoBehaviour
 {
@@ -11,8 +12,9 @@ public class Emitter : MonoBehaviour
 	
 	// Managerコンポーネント
 	private Manager manager;
-	
-	IEnumerator Start ()
+    private System.Random rnd;
+
+    IEnumerator Start ()
 	{
 		
 		// Waveが存在しなければコルーチンを終了する
@@ -22,7 +24,8 @@ public class Emitter : MonoBehaviour
 		
 		// Managerコンポーネントをシーン内から探して取得する
 		manager = FindObjectOfType<Manager>();
-		
+        rnd = new System.Random();
+
 		while (true) {
 			
 			// タイトル表示中は待機
@@ -31,7 +34,7 @@ public class Emitter : MonoBehaviour
 			}
 			
 			// Waveを作成する
-			GameObject g = (GameObject)Instantiate (waves [currentWave], transform.position, Quaternion.identity);
+			GameObject g = (GameObject)Instantiate (waves [rnd.Next(waves.Length)], transform.position, Quaternion.identity);
 			
 			// WaveをEmitterの子要素にする
 			g.transform.parent = transform;
@@ -42,13 +45,7 @@ public class Emitter : MonoBehaviour
 			}
 			
 			// Waveの削除
-			Destroy (g);
-			
-			// 格納されているWaveを全て実行したらcurrentWaveを0にする（最初から -> ループ）
-			if (waves.Length <= ++currentWave) {
-				currentWave = 0;
-			}
-			
+			Destroy (g);			
 		}
 	}
 }
