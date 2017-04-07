@@ -4,10 +4,10 @@ using System.Collections;
 public class Hae1 : MonoBehaviour
 {
     // ヒットポイント
-    public int hp = 1;
+    public int hp = 2;
 
     // スコアのポイント
-    public int point = 100;
+    public int point = 200;
 
     // Spaceshipコンポーネント
     Spaceship spaceship;
